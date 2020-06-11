@@ -595,7 +595,7 @@ class bot:
             print("Tick error! (skiped) -",error_code)
 
 class bot_thread:
-    def __init__(self, username, password, bot_ign, reply_rate=20, whitelist):
+    def __init__(self, username, password, bot_ign, whitelist, reply_rate=20):
         self.username = username
         self.password = password
         self.bot_ign = bot_ign
