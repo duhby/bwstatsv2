@@ -101,6 +101,7 @@ class bot:
         self.unmutetime = 0
         self.muteheartbeat = 0
         self.leaderBuffer = []
+        self.mods = []
         self.whitelist = util.load_obj("whitelist")
         self.whitelistChange = []
         try:
@@ -198,6 +199,11 @@ class bot:
                         leader = [leader.split()[-1] for leader in leader]
                         leader = leader.pop(0)
                         self.leaderBuffer.append(leader)
+                    
+                    elif "Party Moderators" in chat_raw and "●" in chat_raw:
+                        mods = [mods for mods in msg[msg.index(":")+1:].split("●") if len(mods)>1]
+                        mods = [mods.split()[-1] for mods in mods]
+                        self.mods.append(self.leaderBuffer[0])
 
                     # On party list return
                     elif "Party Members" in chat_raw and "●" in chat_raw:
@@ -205,7 +211,9 @@ class bot:
                         users = [user for user in msg[msg.index(":")+1:].split("●") if len(user)>1]
                         users = [user.split()[-1] for user in users]       # remove ranks
                         users.append(self.leaderBuffer[0])
+                        users.extend(self.mods)
                         self.leaderBuffer = []
+                        self.mods = []
                         users.remove(self.bot_ign) # remove bot from the list
                         self.partyQueue = [{"mode":"list","user":users}] + self.partyQueue # put on top of the queue
                         return
