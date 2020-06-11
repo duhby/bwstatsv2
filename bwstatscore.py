@@ -595,11 +595,12 @@ class bot:
             print("Tick error! (skiped) -",error_code)
 
 class bot_thread:
-    def __init__(self, username, password, bot_ign, reply_rate=20):
+    def __init__(self, username, password, bot_ign, reply_rate=20, whitelist):
         self.username = username
         self.password = password
         self.bot_ign = bot_ign
         self.reply_rate = int(reply_rate)
+        self.whitelist = whitelist
 
         self.mutedelay = 0
 
@@ -631,7 +632,7 @@ class bot_thread:
                         self.bot_handle.connection.disconnect(True)
                         print("Bye! ", error_code)
                         time.sleep(30)
-                        self.bot_handle = bot(self.username,self.password,self.bot_ign,self.reply_rate)
+                        self.bot_handle = bot(self.username,self.password,self.bot_ign,self.reply_rate,self.whitelist)
                         self.bot_handle.initialize()
             except Exception as error_code:
                 self.bot_handle = 0
