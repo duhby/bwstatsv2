@@ -1,4 +1,3 @@
-from __future__ import print_function
 from minecraft import authentication
 from minecraft.exceptions import YggdrasilError
 from minecraft.networking.connection import Connection
