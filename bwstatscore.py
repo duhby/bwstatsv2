@@ -565,8 +565,6 @@ class bot:
             self.heartbeatCooldown = time.time()
             self.send_chat("/whereami",0.2)
 
-            print('whitelised loaded',len(self.whitelist))
-
             if self.current_load>self.reply_rate:
                 print("Overloaded!! <-----")
             self.current_load = 0
