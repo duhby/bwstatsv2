@@ -565,11 +565,6 @@ class bot:
             self.heartbeatCooldown = time.time()
             self.send_chat("/whereami",0.2)
 
-            self.whitelist = util.load_obj('whitelist')
-            self.whitelist += self.whitelistChange
-            util.save_obj(self.whitelist,'whitelist')
-            self.whitelistChange = []
-
             print('whitelised loaded',len(self.whitelist))
 
             if self.current_load>self.reply_rate:
