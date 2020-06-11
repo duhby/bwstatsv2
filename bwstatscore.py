@@ -64,11 +64,12 @@ class util:
             util.dict_increment(large_dict,key,small_dict[key])
 
 class bot:
-    def __init__(self, username, password, bot_ign, reply_rate=20):
+    def __init__(self, username, password, bot_ign, reply_rate=20,whitelist=False):
         self.username = username
         self.password = password
         self.bot_ign  = bot_ign
         self.debug = False
+        self.whitelist = whitelist
 
         self.reply_rate = int(reply_rate)
 
@@ -102,13 +103,13 @@ class bot:
         self.muteheartbeat = 0
         self.leaderBuffer = []
         self.mods = []
-        self.whitelist = util.load_obj("whitelist")
-        self.whitelistChange = []
+        self.whitelisted = []
         try:
-          self.whitelist = util.load_obj('whitelist')
-          print('whitelisted loaded -',self.whitelist)
-        except Exception as e:
-          print('error',e)
+            with open("whitelisted.txt","r") as file:
+                self.whitelisted = [x for x in file.read().split("\n")]
+        except Exception:
+            self.whitelisted = []
+        print("whitelisted loaded", len(self.whitelisted))
 
     def initialize(self):
         self.connection.register_packet_listener( self.handle_join_game, clientbound.play.JoinGamePacket)
@@ -168,6 +169,7 @@ class bot:
                         for data in chat_json["extra"]:
                             if "/party accept" in str(data):
                                 user=data["clickEvent"]["value"].split()[-1]
+                                if user not in self.whitelisted and self.whitelist: return # whitelist
                                 if self.cooldowncheck(user,5): return  # cooldown
                                 self.partyQueue.append({"mode":"queue","user":user})
                                 return
@@ -220,7 +222,6 @@ class bot:
 
                     # On msg request
                     elif ("From " in chat_raw) and ("light_purple" in chat_raw) and (self.bot_ign not in chat_raw):
-                        print(msg)
                         self.chat_msg(msg)
                         return
 
@@ -282,6 +283,7 @@ class bot:
         msg=" ".join(msg.split()) # remove double space
         msg=msg.replace("+ ","+").replace("++","+").replace("+]","]")
         user=msg[:msg.index(":")].split()[-1]
+        if user not in self.whitelisted and self.whitelist: return # whitelist
         agus=msg[msg.index(":")+1:].split()
         # user = 'FatDubs'
         # agus = ['FatDubs', 'gamerboy80', '5']
