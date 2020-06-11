@@ -11,5 +11,5 @@ if whitelist.lower() == "y":
 else:
   whitelist = False
 
-bwstatsbot = bwstatscore.bot_thread(username,password,ign,rate,whitelist)
+bwstatsbot = bwstatscore.bot_thread(username,password,ign,whitelist,rate)
 bwstatsbot.start()
