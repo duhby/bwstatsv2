@@ -6,7 +6,7 @@ ign= input('ign: ')
 rate= input('rate: ')
 whitelist = input('whitelist: [y/N]' )
 
-if whitelist.lower() == y:
+if whitelist.lower() == "y":
   whitelist = True
 else:
   whitelist = False
