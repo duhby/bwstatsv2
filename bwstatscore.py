@@ -168,7 +168,7 @@ class bot:
                         for data in chat_json["extra"]:
                             if "/party accept" in str(data):
                                 user=data["clickEvent"]["value"].split()[-1]
-                                if user not in self.whitelisted and self.whitelist: return # whitelist
+                                if (user not in self.whitelisted) and self.whitelist: return # whitelist
                                 if self.cooldowncheck(user,5): return  # cooldown
                                 self.partyQueue.append({"mode":"queue","user":user})
                                 return
@@ -282,7 +282,7 @@ class bot:
         msg=" ".join(msg.split()) # remove double space
         msg=msg.replace("+ ","+").replace("++","+").replace("+]","]")
         user=msg[:msg.index(":")].split()[-1]
-        if user not in self.whitelisted and self.whitelist: return # whitelist
+        if (user not in self.whitelisted) and self.whitelist: return # whitelist
         agus=msg[msg.index(":")+1:].split()
         # user = 'FatDubs'
         # agus = ['FatDubs', 'gamerboy80', '5']
