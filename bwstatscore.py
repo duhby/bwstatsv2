@@ -199,6 +199,7 @@ class bot:
                         leader = [leader for leader in msg[msg.index(":")+1:].split("●") if len(leader)>1]
                         leader = [leader.split()[-1] for leader in leader]
                         leader = leader.pop(0)
+                        self.mods_buffer = []
                         self.leaderBuffer.append(leader)
                     
                     elif "Party Moderators" in chat_raw and "●" in chat_raw:
